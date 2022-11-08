@@ -193,7 +193,8 @@ group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
 # FOR AZERTY KEYBOARDS
 #group_names = ["ampersand", "eacute", "quotedbl", "apostrophe", "parenleft", "section", "egrave", "exclam", "ccedilla", "agrave",]
 
-group_labels = ["㊀", "㊁", "㊂", "㊃", "㊄", "㊅", "㊆", "㊇", "㊈", "X"]
+#group_labels = ["㊀", "㊁", "㊂", "㊃", "㊄", "㊅", "㊆", "㊇", "㊈", "X"]
+group_labels = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"]
 #group_labels = ["", "", "", "", "", "", "", "", "", "",]
 #group_labels = ["", "", "", "", "", "", "", "", "", "",]
 #group_labels = ["", "", "", "", "", "", "", "", "", "",]
@@ -250,7 +251,6 @@ layouts = [
 ]
 
 # COLORS FOR THE BAR
-#Theme name : ArcoLinux Nord
 def init_colors():
     return [["#1B3654"],   	 # color 0 	BG
             ["#B05E63"],     # color 1 	
@@ -286,14 +286,14 @@ def init_widgets_list():
 			filename='~/.config/qtile/icons/seperators/icon-page.png',
 		),
 		widget.GroupBox(
-			font="FontAwesome",
+			font="RobotoSlab Bold",
 			borderwidth = 0,
 			disable_drag = True,
 			active = colors[4],
-			inactive = colors[7],
+			inactive = colors[0],
 			rounded = True,
 			highlight_method = "text",
-			this_current_screen_border = colors[2],
+			this_current_screen_border = colors[5],
 			background = '#c07568'
 			),
 		widget.Image(
@@ -307,6 +307,9 @@ def init_widgets_list():
 			),
 		widget.Image(
 			filename='~/.config/qtile/icons/seperators/sys-update.png',
+		),
+		widget.Image(
+			filename='~/.config/qtile/icons/status/pac.png',
 		),
 		widget.CheckUpdates(
 			colour_have_updates=colors[0],
@@ -384,19 +387,15 @@ def init_widgets_list():
 			foreground=colors[8],
 			background=colors[8],
 			fontsize=16,
-			width=115,
+			width=80,
 			),
 			
 		widget.Image(
 			filename='~/.config/qtile/icons/seperators/temp-end.png',
 		),
-		widget.TextBox(
-			font="FontAwesome",
-			text="",
-			foreground=colors[0],
-			background='#d7a67e',
-			fontsize=16
-			),
+		widget.Image(
+			filename='~/.config/qtile/icons/status/temp.png',
+		),
 		widget.ThermalSensor(
 			foreground = colors[0],
 			foreground_alert = colors[1],
@@ -408,15 +407,10 @@ def init_widgets_list():
 		widget.Image(
 			filename='~/.config/qtile/icons/seperators/bat-temp.png',
 		),
-		widget.TextBox(
-			font="FontAwesome",
-			text="",
-			foreground=colors[0],
-			background='#cd8d71',
-			fontsize=16,
-			width = 30
-			),
-		widget.Battery(
+		widget.Image(
+			filename='~/.config/qtile/icons/status/bat.png',
+		),
+			widget.Battery(
 			update_interval = 1,
 			format = '{percent: 2.0%}',
 			low_percentage=20.0,
@@ -427,14 +421,9 @@ def init_widgets_list():
 		widget.Image(
 			filename='~/.config/qtile/icons/seperators/cpu-bat.png',
 		),
-		widget.TextBox(
-			font="FontAwesome",
-			text="",
-			foreground=colors[0],
-			background='#c07568',
-			#padding = 0,
-			fontsize=20
-			),
+		widget.Image(
+			filename='~/.config/qtile/icons/status/intel-cpu.png',
+		),
 		widget.CPU(
 			foreground = colors[0],
 			background='#c07568',
@@ -444,14 +433,9 @@ def init_widgets_list():
 		widget.Image(
 			filename='~/.config/qtile/icons/seperators/ram-cpu.png',
 		),
-		widget.TextBox(
-			font="FontAwesome",
-			text=" ",
-			foreground=colors[0],
-			background='#b05e63',
-			padding = 0,
-			fontsize=16
-			),
+		widget.Image(
+			filename='~/.config/qtile/icons/status/ram.png',
+		),
 		widget.Memory(
 			format = '{MemUsed: .0f}MB ',
 			update_interval = 1,
@@ -471,23 +455,12 @@ def init_widgets_list():
 			update_interval = 1,
 			foreground = colors[0],
 			background = '#b05e63',
-			width = 80,
+			width = 100,
             )    
     ]
     return widgets_list
 
 widgets_list = init_widgets_list()
-
-
-#1B3654
-#AA5C63
-#544C6E
-#E56B60
-#9993B9
-#D7A67E
-#85213D
-#883920
-
 
 def init_widgets_screen1():
     widgets_screen1 = init_widgets_list()
@@ -505,9 +478,9 @@ def init_screens():
 			background = '#000000',
 			size = 25,
 			opacity = 1,
-			#margin = [7, 10, 2, 10],
-			border_color ='#9993B9',
-			border_width = [0, 0, 5, 0],
+			margin = [7, 7, 2, 7],
+			border_color ='#1B3654',
+			border_width = [2, 0, 2, 0],
 			),
 		),
     ]

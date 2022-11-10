@@ -34,6 +34,9 @@ from libqtile import layout, bar, widget, hook, qtile
 from libqtile.config import Click, Drag, Group, Key, Match, Screen, Rule
 from libqtile.command import lazy
 from libqtile.widget import Spacer
+from qtile_extras import widget
+from qtile_extras.widget.decorations import PowerLineDecoration
+
 #import arcobattery
 
 #mod4 or mod = super key
@@ -195,6 +198,7 @@ group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
 
 #group_labels = ["㊀", "㊁", "㊂", "㊃", "㊄", "㊅", "㊆", "㊇", "㊈", "X"]
 group_labels = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"]
+#group_labels = ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十"]
 #group_labels = ["", "", "", "", "", "", "", "", "", "",]
 #group_labels = ["", "", "", "", "", "", "", "", "", "",]
 #group_labels = ["", "", "", "", "", "", "", "", "", "",]
@@ -230,8 +234,8 @@ for i in groups:
 
 def init_layout_theme():
     return {"margin":5,
-            "border_width":3,
-            "border_focus": "#B05E63",
+            "border_width":5,
+            "border_focus": "#9993B9",
             "border_normal": "#1B365422"
             }
 
@@ -264,11 +268,20 @@ def init_colors():
 
 colors = init_colors()
 
+powerline = {
+    "decorations": [
+        #PowerLineDecoration(path=[(0, 0), (0.5, 0), (0.5, 0.25), (1, 0.25), (1, 0.75), (0.5, 0.75), (0.5, 1), (0, 1)])
+        PowerLineDecoration(path='forward_slash')
+    ]
+}
+
 # WIDGETS FOR THE BAR
 
 def init_widgets_defaults():
     return dict(font="Teko",
                 fontsize = 20,
+                padding = 0,
+                margin = 0,
 				)
 widget_defaults = init_widgets_defaults()
 
@@ -280,37 +293,39 @@ def init_widgets_list():
 			background = '#b05e63',
 			width = 80,
 			padding = 5,
-			scale=0.80
+			scale=0.80,
+			**powerline
 			),
-		widget.Image(
-			filename='~/.config/qtile/icons/seperators/icon-page.png',
-		),
 		widget.GroupBox(
 			font="RobotoSlab Bold",
 			borderwidth = 0,
 			disable_drag = True,
 			active = colors[4],
 			inactive = colors[0],
-			rounded = True,
 			highlight_method = "text",
 			this_current_screen_border = colors[5],
-			background = '#c07568'
+			background = '#c07568',
+			padding = 5,
+			**powerline
 			),
-		widget.Image(
-			filename='~/.config/qtile/icons/seperators/page-sys.png',
-		),
 		widget.Systray(
 			background='#cd8d71',
 			icon_size=20,
 			width = 150,
 			padding = 0,
+			**powerline
+			),
+		widget.TextBox(
+			font="FontAwesome",
+			text="",
+			foreground=colors[8],
+			background='#d7a67e',
+			width = 5			
 			),
 		widget.Image(
-			filename='~/.config/qtile/icons/seperators/sys-update.png',
-		),
-		widget.Image(
 			filename='~/.config/qtile/icons/status/pac.png',
-		),
+			background = '#d7a67e',
+			),
 		widget.CheckUpdates(
 			colour_have_updates=colors[0],
 			colour_no_updates=colors[0],
@@ -320,39 +335,37 @@ def init_widgets_list():
             mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e sudo pacman -Syu')},
             no_update_string = 'Up to date',
             initial_text = 'Searching',
-            width = 115,
+            width = 70,
+            **powerline
 			),
-		widget.Image(
-			filename='~/.config/qtile/icons/seperators/update-end.png',
-		),
 			
-			
+				
 		widget.TextBox(
 			font="FontAwesome",
 			text="",
 			foreground=colors[0],
 			background=colors[8],
 			fontsize=16,
-			width=80,
+			width=100,
+			**powerline
 			),
 			
-		widget.Image(
-			filename='~/.config/qtile/icons/seperators/down-end.png',
-		),
 		widget.TextBox(
 			font="FontAwesome",
 			text="  ",
 			foreground='#f8f8f8',
 			background=colors[1],
 			padding = 0,
-			fontsize=16
+			fontsize=16,
+			**powerline
 			),
 		widget.Net(
 			foreground='#f8f8f8',
 			background=colors[1],
 			format = '{down}',
 			padding = 0,
-			width = 60
+			width = 60,
+			**powerline
 			),
 		widget.Clock(
 			font = 'RobotoSlab Bold',
@@ -360,7 +373,8 @@ def init_widgets_list():
 			foreground = '#f8f8f8',
 			background = colors[7],
 			format="%A %d %B %Y  %X",
-			width = 290
+			width = 315,
+			**powerline
 			),
 		widget.TextBox(
 			font="FontAwesome",
@@ -368,7 +382,8 @@ def init_widgets_list():
 			foreground='#f8f8f8',
 			background=colors[2],
 			padding = 0,
-			fontsize=16
+			fontsize=16,
+			**powerline
 			),
 		widget.Net(
 			foreground='#f8f8f8',
@@ -376,10 +391,8 @@ def init_widgets_list():
 			format = '{up}',
 			padding = 0,
 			width = 70,
+			**powerline
 			),
-		widget.Image(
-			filename='~/.config/qtile/icons/seperators/up-end.png',
-		),
 			
 		widget.TextBox(
 			font="FontAwesome",
@@ -387,14 +400,20 @@ def init_widgets_list():
 			foreground=colors[8],
 			background=colors[8],
 			fontsize=16,
-			width=80,
-			),
+			width=100,
+			**powerline
+			),	
 			
-		widget.Image(
-			filename='~/.config/qtile/icons/seperators/temp-end.png',
-		),
+		widget.TextBox(
+			font="FontAwesome",
+			text="",
+			foreground=colors[8],
+			background='#d7a67e',
+			width = 5			
+			),
 		widget.Image(
 			filename='~/.config/qtile/icons/status/temp.png',
+			background = '#d7a67e',
 		),
 		widget.ThermalSensor(
 			foreground = colors[0],
@@ -403,12 +422,19 @@ def init_widgets_list():
 			metric = True,
 			threshold = 50,
 			padding = 3,
+			width = 45,
+			**powerline
+			),
+		widget.TextBox(
+			font="FontAwesome",
+			text="",
+			foreground=colors[8],
+			background='#cd8d71',
+			width = 5			
 			),
 		widget.Image(
-			filename='~/.config/qtile/icons/seperators/bat-temp.png',
-		),
-		widget.Image(
 			filename='~/.config/qtile/icons/status/bat.png',
+			background = '#cd8d71',
 		),
 			widget.Battery(
 			update_interval = 1,
@@ -417,45 +443,59 @@ def init_widgets_list():
 			low_forground=colors[1],
 			foreground = colors[0],
 			background = '#cd8d71',
+			**powerline
+			),
+		widget.TextBox(
+			font="FontAwesome",
+			text="",
+			foreground=colors[8],
+			background='#c07568',
+			width = 5			
 			),
 		widget.Image(
-			filename='~/.config/qtile/icons/seperators/cpu-bat.png',
-		),
-		widget.Image(
 			filename='~/.config/qtile/icons/status/intel-cpu.png',
+			background = '#c07568',
 		),
 		widget.CPU(
 			foreground = colors[0],
 			background='#c07568',
 			core = "all",
 			width = 125,
+			**powerline
+			),
+		widget.TextBox(
+			font="FontAwesome",
+			text="",
+			foreground=colors[8],
+			background='#b05e63',
+			width = 5			
 			),
 		widget.Image(
-			filename='~/.config/qtile/icons/seperators/ram-cpu.png',
-		),
-		widget.Image(
 			filename='~/.config/qtile/icons/status/ram.png',
+			background = '#b05e63',
 		),
 		widget.Memory(
 			format = '{MemUsed: .0f}MB ',
 			update_interval = 1,
 			foreground = colors[0],
 			background = '#b05e63',
-            		),
+			width = 55
+            ),
         	widget.TextBox(
 			font="FontAwesome",
 			text="",
 			foreground=colors[0],
 			background='#b05e63',
 			padding = 0,
-			fontsize=16
+			fontsize=16,
+			width = 20
 			),
         	widget.Memory(
 			format = '{MemTotal: .0f}MB',
 			update_interval = 1,
 			foreground = colors[0],
 			background = '#b05e63',
-			width = 100,
+			width = 53,
             )    
     ]
     return widgets_list
@@ -478,9 +518,9 @@ def init_screens():
 			background = '#000000',
 			size = 25,
 			opacity = 1,
-			margin = [7, 7, 2, 7],
+			margin = [6, 5, 2, 5],
 			border_color ='#1B3654',
-			border_width = [2, 0, 2, 0],
+			border_width = [2, 2, 2, 2],
 			),
 		),
     ]

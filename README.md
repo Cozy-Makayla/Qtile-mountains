@@ -1,4 +1,7 @@
 # Qtile-mountains
+
+![qtile-mountains](https://user-images.githubusercontent.com/104133678/201153185-2c003ac2-5c96-4ec5-bd9f-4427fbf246ef.png)
+
 Custom Qtile config, you will need;
 - nitrogen/any other wallpaper setter to set the wallpaper
 - Picom-ibhagwan (https://github.com/ibhagwan/picom)

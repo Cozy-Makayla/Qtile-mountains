@@ -1,6 +1,6 @@
 # Qtile-mountains
 
-![qtile-mountains](https://user-images.githubusercontent.com/104133678/201153185-2c003ac2-5c96-4ec5-bd9f-4427fbf246ef.png)
+![qtile-mountains](https://user-images.githubusercontent.com/104133678/204092685-84d31988-f8b6-4354-ae3d-9c7df1d82192.png)
 
 Custom Qtile config, you will need;
 - nitrogen/any other wallpaper setter to set the wallpaper

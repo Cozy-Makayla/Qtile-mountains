@@ -31,9 +31,13 @@ This config was last updated using;
 
 Previews:
 
-![2022-11-10-1668094095_screenshot_1920x1080](https://user-images.githubusercontent.com/104133678/201136843-1d878360-aa59-4840-b763-a1d9715d5a23.jpg)
+![Screenshot from 2022-11-26 14-08-58](https://user-images.githubusercontent.com/104133678/204092940-aa271475-e1c9-4f79-9e93-ac12a09a5cda.png)
 
-![2022-11-10-1668094154_screenshot_1920x1080](https://user-images.githubusercontent.com/104133678/201136604-b289cab1-63db-4906-8bcf-37546586fbcd.jpg)
 
-![2022-11-10-1668094877_screenshot_1920x1080](https://user-images.githubusercontent.com/104133678/201139602-41226557-83f4-477e-9f4b-9705b0433f8f.jpg)
+![Screenshot from 2022-11-26 14-07-42](https://user-images.githubusercontent.com/104133678/204092955-c1f19f24-4751-467d-a362-3ec2ab4f97bc.png)
+
+~~ BASH PROMPT ~~
+![Screenshot from 2022-11-26 14-08-36](https://user-images.githubusercontent.com/104133678/204092957-f3f21549-2954-46cd-918e-e13989f27d04.png)
+
+
 

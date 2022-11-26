@@ -1,30 +1,3 @@
-# Copyright (c) 2010 Aldo Cortesi
-# Copyright (c) 2010, 2014 dequis
-# Copyright (c) 2012 Randall Ma
-# Copyright (c) 2012-2014 Tycho Andersen
-# Copyright (c) 2012 Craig Barnes
-# Copyright (c) 2013 horsik
-# Copyright (c) 2013 Tao Sauvage
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
-
 import os
 import re
 import socket
@@ -35,9 +8,7 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen, Rule
 from libqtile.command import lazy
 from libqtile.widget import Spacer
 from qtile_extras import widget
-from qtile_extras.widget.decorations import PowerLineDecoration
-
-#import arcobattery
+from qtile_extras.widget.decorations import PowerLineDecoration, BorderDecoration
 
 #mod4 or mod = super key
 mod = "mod4"
@@ -233,10 +204,10 @@ for i in groups:
 
 
 def init_layout_theme():
-    return {"margin":5,
-            "border_width":5,
+    return {"margin":10,
+            "border_width":3,
             "border_focus": "#9993B9",
-            "border_normal": "#1B365422"
+            "border_normal": "#1B365400"
             }
 
 layout_theme = init_layout_theme()
@@ -264,16 +235,17 @@ def init_colors():
             ["#85213D"],     # color 5 	
             ["#465457"],     # color 6 
             ["#883920"],     # color 7
-            ['#1B3654']]   	 # Color 8  FG
+            ['#1B365400']]   	 # Color 8  FG
 
 colors = init_colors()
 
-powerline = {
-    "decorations": [
-        #PowerLineDecoration(path=[(0, 0), (0.5, 0), (0.5, 0.25), (1, 0.25), (1, 0.75), (0.5, 0.75), (0.5, 1), (0, 1)])
-        PowerLineDecoration(path='forward_slash')
-    ]
-}
+powerline = {"decorations": [PowerLineDecoration(path='forward_slash')]}
+
+powerline2 = {"decorations": [PowerLineDecoration(path='back_slash')]}
+
+powerline3 = {"decorations": [PowerLineDecoration(path='rounded_left')]}
+
+powerline4 = {"decorations": [PowerLineDecoration(path='rounded_right')]}
 
 # WIDGETS FOR THE BAR
 
@@ -294,7 +266,7 @@ def init_widgets_list():
 			width = 80,
 			padding = 5,
 			scale=0.80,
-			**powerline
+			**powerline2
 			),
 		widget.GroupBox(
 			font="RobotoSlab Bold",
@@ -306,58 +278,51 @@ def init_widgets_list():
 			this_current_screen_border = colors[5],
 			background = '#c07568',
 			padding = 5,
-			**powerline
-			),
-		widget.Systray(
-			background='#cd8d71',
-			icon_size=20,
-			width = 150,
-			padding = 0,
-			**powerline
-			),
-		widget.TextBox(
-			font="FontAwesome",
-			text="",
-			foreground=colors[8],
-			background='#d7a67e',
-			width = 5			
+			**powerline2
 			),
 		widget.Image(
 			filename='~/.config/qtile/icons/status/pac.png',
 			background = '#d7a67e',
 			),
 		widget.CheckUpdates(
+			fontsize = 14,
 			colour_have_updates=colors[0],
 			colour_no_updates=colors[0],
 			background='#d7a67e',
 			distro = 'Arch_checkupdates',
-			display_format = '{updates} Updates',
-            mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e sudo pacman -Syu')},
-            no_update_string = 'Up to date',
-            initial_text = 'Searching',
-            width = 70,
-            **powerline
+			display_format = '🟠 {updates}',
+           		mouse_callbacks = {'Button1': lambda: qtile.cmd_spawn(myTerm + ' -e sudo pacman -Syu')},
+            		no_update_string = '🟢',
+            		initial_text = '🔵',
+            		width = 65,
+            		**powerline2
 			),
 			
-				
 		widget.TextBox(
-			font="FontAwesome",
 			text="",
-			foreground=colors[0],
 			background=colors[8],
-			fontsize=16,
-			width=100,
-			**powerline
+			width=45,
+			),
+			
+		widget.Systray(
+			background='#00000000',
 			),
 			
 		widget.TextBox(
+			text="",
+			background=colors[8],
+			width=50,
+			**powerline2
+			),	
+		
+		widget.TextBox(
 			font="FontAwesome",
-			text="  ",
+			text="🔽",
 			foreground='#f8f8f8',
 			background=colors[1],
 			padding = 0,
 			fontsize=16,
-			**powerline
+			**powerline2
 			),
 		widget.Net(
 			foreground='#f8f8f8',
@@ -365,7 +330,11 @@ def init_widgets_list():
 			format = '{down}',
 			padding = 0,
 			width = 60,
-			**powerline
+			),
+		widget.TextBox(
+			text="",
+			background=colors[7],
+			width = 25,
 			),
 		widget.Clock(
 			font = 'RobotoSlab Bold',
@@ -374,11 +343,15 @@ def init_widgets_list():
 			background = colors[7],
 			format="%A %d %B %Y  %X",
 			width = 315,
-			**powerline
+			),
+		widget.TextBox(
+			text="",
+			background=colors[2],
+			width = 15
 			),
 		widget.TextBox(
 			font="FontAwesome",
-			text="  ",
+			text="🔼",
 			foreground='#f8f8f8',
 			background=colors[2],
 			padding = 0,
@@ -395,12 +368,9 @@ def init_widgets_list():
 			),
 			
 		widget.TextBox(
-			font="FontAwesome",
 			text="",
-			foreground=colors[8],
 			background=colors[8],
-			fontsize=16,
-			width=100,
+			width=140,
 			**powerline
 			),	
 			
@@ -414,13 +384,13 @@ def init_widgets_list():
 		widget.Image(
 			filename='~/.config/qtile/icons/status/temp.png',
 			background = '#d7a67e',
-		),
+			),
 		widget.ThermalSensor(
 			foreground = colors[0],
 			foreground_alert = colors[1],
 			background = '#d7a67e',
 			metric = True,
-			threshold = 50,
+			threshold = 55,
 			padding = 3,
 			width = 45,
 			**powerline
@@ -435,8 +405,8 @@ def init_widgets_list():
 		widget.Image(
 			filename='~/.config/qtile/icons/status/bat.png',
 			background = '#cd8d71',
-		),
-			widget.Battery(
+			),
+		widget.Battery(
 			update_interval = 1,
 			format = '{percent: 2.0%}',
 			low_percentage=20.0,
@@ -455,12 +425,12 @@ def init_widgets_list():
 		widget.Image(
 			filename='~/.config/qtile/icons/status/intel-cpu.png',
 			background = '#c07568',
-		),
+			),
 		widget.CPU(
 			foreground = colors[0],
 			background='#c07568',
 			core = "all",
-			width = 125,
+			width = 110,
 			**powerline
 			),
 		widget.TextBox(
@@ -473,7 +443,7 @@ def init_widgets_list():
 		widget.Image(
 			filename='~/.config/qtile/icons/status/ram.png',
 			background = '#b05e63',
-		),
+			),
 		widget.Memory(
 			format = '{MemUsed: .0f}MB ',
 			update_interval = 1,
@@ -495,7 +465,7 @@ def init_widgets_list():
 			update_interval = 1,
 			foreground = colors[0],
 			background = '#b05e63',
-			width = 53,
+			width = 100,
             )    
     ]
     return widgets_list
@@ -515,12 +485,12 @@ def init_screens():
     Screen(
 		top=bar.Bar(
 			widgets=widgets_screen1,
-			background = '#000000',
+			background = '#00000000',
 			size = 25,
 			opacity = 1,
-			margin = [6, 5, 2, 5],
+			margin = [0, 0, 0, 0],
 			border_color ='#1B3654',
-			border_width = [2, 2, 2, 2],
+			border_width = [0, 0, 0, 0],
 			),
 		),
     ]
@@ -595,7 +565,7 @@ floating_types = ["notification", "toolbar", "splash", "dialog"]
 
 
 follow_mouse_focus = True
-bring_front_click = False
+bring_front_click = True
 cursor_warp = False
 floating_layout = layout.Floating(float_rules=[
     # Run the utility of `xprop` to see the wm class and name of an X client.
@@ -629,6 +599,6 @@ floating_layout = layout.Floating(float_rules=[
 ],  fullscreen_border_width = 0, border_width = 0)
 auto_fullscreen = True
 
-focus_on_window_activation = "focus" # or smart
+focus_on_window_activation = "smart" # or smart
 
 wmname = "Qtile"
